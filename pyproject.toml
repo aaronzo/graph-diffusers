@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "graph-diffusers"
+version = "0.1.0-dev"
+description = "Diffusion operators for graph machine learning"
+authors = ["Aaron Zolnai-Lucas <azolnailucas@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[[tool.poetry.source]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "supplemental"
+
+[[tool.poetry.source]]
+name = "pyg-cpu"
+url = "https://data.pyg.org/whl/torch-2.3.0+cpu.html"
+priority = "supplemental"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "*"
+python-graphblas = "*"
+pytorch = { version = "*", optional = true }
+torch-sparse = { version = "*", optional = true }
+
+[tool.poetry.extras]
+torch = ["pytorch", "torch-sparse"]
+
+[tool.poetry.group.dev.dependencies]
+mypy = "*"
+ruff = "*"
+pytest = "*"
+torch = { version = "~2.3.0", source = "pytorch-cpu" }
+torch-sparse = { version = "*", source = "pyg-cpu"}
+torch-scatter = { version = "*", source = "pyg-cpu"}
+
+[tool.mypy]
+ignore_missing_imports = true
+strict = true
+disallow_subclassing_any = false
+disallow_any_generics = false
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
